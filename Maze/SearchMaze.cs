@@ -19,10 +19,10 @@ namespace Maze
             List<Location2D> record = new List<Location2D>();
             Location2D entry = new Location2D(mp.startRow, mp.startCol);
             locStack.Push(entry);
+            bool isSuccess = false;
+            mp.printMaze();
 
-            SearchMaze search = new SearchMaze();
-
-            while(locStack != null)
+            while (locStack != null)
             {
                 Thread.Sleep(500);
                 Location2D here = locStack.Pop();
@@ -30,13 +30,14 @@ namespace Maze
                 int r = here.row;
                 int c = here.col;
                 record.Add(new Location2D(r, c));
-                mp.printMaze();
+                
                 if (r == mp.endRow && c == mp.endCol)
                 {
                     mp.SetMap(r, c, '.');
                     mp.printMaze();
                     Console.WriteLine("미로 탐색 성공");
-                    return;
+                    isSuccess = true;
+                    break;
                 }
                 else
                 {
@@ -60,8 +61,8 @@ namespace Maze
                 }
                 
             }
-
-            Console.WriteLine("미로 탐색 실패");
+            if(isSuccess == false)
+                Console.WriteLine("미로 탐색 실패");
         }
     }
 }
